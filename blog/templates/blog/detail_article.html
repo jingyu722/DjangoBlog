@@ -1,0 +1,31 @@
+{% extends 'layout/blog.html' %}
+{% block title-text %}
+    {{ article.title }}
+{% endblock %}
+{% block page-context %}
+    <div class="blog-post">
+        <h2>{{ article.title }}</h2>
+        <p class="blog-post-meta">{{ article.pub_date }}, <a href="#">{{ article.author }}</a></p>
+        <p>{{ article.context }}</p>
+    </div>
+    <div>
+        <h4>评论列表</h4>
+        {% if comments != None %}
+            {% for comment in comments %}
+                <p>{{ comment.comment }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div>
+        <h4>发表评论</h4>
+        <form action="{% url 'blog:comment' article.id %}" method="post">
+            {% csrf_token %}
+            <textarea class="" name="comment" cols="35" rows="4" maxlength="6000" aria-required="true"
+                      required="required">
+
+            </textarea>
+            <br>
+            <input type="submit" class="button" value="发表">
+        </form>
+    </div>
+{% endblock %}

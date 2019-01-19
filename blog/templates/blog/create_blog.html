@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Blog</title>
+</head>
+<body>
+<form action="{% url 'blog:create_action' %}" method="post">
+    {% csrf_token %}
+    <label>
+        Title<input type="text" name="title">
+    </label>
+    <br>
+    <label>
+        Context<input type="text" name="context">
+    </label>
+    <br>
+    <input type="submit" value="create">
+</form>
+</body>
+</html>
