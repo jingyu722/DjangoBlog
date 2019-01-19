@@ -26,7 +26,7 @@ class Article(models.Model):
     # 正文
     context = models.TextField('正文', null=True)
     author = models.ForeignKey(Author, on_delete=models.DO_NOTHING, verbose_name='作者', null=True, blank=True)
-    pub_date = models.DateTimeField('发布时间', blank=True, null=True)
+    pub_date = models.DateTimeField('发布时间', blank=True, null=True, default=now)
 
     def __str__(self):
         return self.title

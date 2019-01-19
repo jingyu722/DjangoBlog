@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 from django.utils.timezone import now
 from django.views import generic
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from .models import Article, Comment
+from .forms import ArticleForm
 from django.urls import reverse
 
 
@@ -23,27 +24,23 @@ def detail_article(request, article_id):
     comments = Comment.objects.filter(article=article)
     if comments.count() == 0:
         comments = None
-    connect = {
+    context = {
         'article': article,
         'comments': comments,
     }
-    return render(request, 'blog/detail_article.html', connect)
-
-    # comments = Comment.objects.all(article=article)
+    return render(request, 'blog/detail_article.html', context)
 
 
-# class DetailArticle(generic.DetailView):
-#     model = Article
-#     template_name = 'blog/detail_article.html'
-
-
-# class CreateView(generic.DetailView):
-#     model = Article
-#     template_name = 'blog/create_blog.html'
+class CreateView(generic.FormView):
+    template_name = 'blog/create_blog.html'
 
 
 def create_view(request):
-    return render(request, 'blog/create_blog.html')
+    form = ArticleForm
+    context = {
+        'form': form,
+    }
+    return render(request, 'blog/create_blog.html', context)
 
 
 def create_action(request):
@@ -58,9 +55,3 @@ def comment(request, article_id):
     comment_text = request.POST['comment']
     Comment.objects.create(article=article, comment=comment_text, comment_date=now())
     return HttpResponseRedirect(reverse('blog:detail', args=(article_id,)))
-# def index(request):
-#     articles = Article.objects.all()
-#     context = {
-#         'articles': articles
-#     }
-#     return render(request, 'blog/base.html', context)
