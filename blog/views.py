@@ -3,7 +3,7 @@ from django.utils.timezone import now
 from django.views import generic
 from django.http import HttpResponseRedirect
 from .models import Article, Comment
-from .forms import ArticleForm
+from .forms import ArticleForm, UserForm
 from django.urls import reverse
 
 
@@ -55,3 +55,11 @@ def comment(request, article_id):
     comment_text = request.POST['comment']
     Comment.objects.create(article=article, comment=comment_text, comment_date=now())
     return HttpResponseRedirect(reverse('blog:detail', args=(article_id,)))
+
+
+def register(request):
+    form = UserForm
+    context = {
+        'form': form,
+    }
+    return render(request, 'blog/register.html', context)

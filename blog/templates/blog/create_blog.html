@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Blog</title>
-</head>
-<body>
-<form action="{% url 'blog:create_action' %}" method="post" id="articleform" class="article-form">
-    {% csrf_token %}
-    {{ form.title }}
-    <br>
-    {{ form.context }}
-    <br>
-    <input type="submit" value="create">
-</form>
-</body>
-</html>
+{% extends 'layout/blog.html' %}
+{% block title-text %}
+    写博客
+{% endblock %}
+{% block page-context %}
+    <form action="{% url 'blog:create_action' %}" method="post" id="articleform" class="article-form">
+        {% csrf_token %}
+        标题:<br>
+        {{ form.title }}
+        <br>
+        正文:<br>
+        {{ form.context }}
+        <br>
+        <input type="submit" value="发表">
+    </form>
+{% endblock %}

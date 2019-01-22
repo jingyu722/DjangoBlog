@@ -11,6 +11,12 @@ from django.utils.timezone import now
 #              update_fields=None):
 #         return
 
+class User(models.Model):
+    nick_name = models.CharField('姓名', max_length=16)
+    email = models.EmailField('邮箱')
+    password = models.CharField('密码', max_length=200)
+
+
 class Author(models.Model):
     # article = models.ForeignKey(Article, on_delete=models.DO_NOTHING, default=1)
     name = models.CharField('姓名', max_length=16)
